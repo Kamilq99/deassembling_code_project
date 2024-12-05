@@ -1,31 +1,33 @@
-// verify_key.c
 #include <stdbool.h>
-#include <string.h>
 
 __declspec(dllexport) bool verify_license_key(const char* key) {
     bool is_valid = false;
 
-    // Assembly comparison - for simplicity, we check against a fixed key "ABCD-1234"
-    __asm__ (
-        "movl $0, %%eax\n"            // Set is_valid to false
-        "movl %[key], %%esi\n"        // Load the address of key into esi
-        "movl $0x34433241, %%ebx\n"   // "ABCD" as a number in the register
-        "movl (%%esi), %%ecx\n"       // Load the first 4 bytes of the key
-        "cmpl %%ebx, %%ecx\n"         // Compare if the first 4 bytes are "ABCD"
-        "jne end\n"                   // Jump to end if different
+    __asm__ __volatile__ (
+        "xor %%eax, %%eax\n"             // Zainicjuj eax (is_valid = false)
+        "mov %[key], %%esi\n"            // Przenieś adres key do esi
+        "movl $0x34433241, %%ebx\n"      // Załaduj wartość 'ABCD' do ebx
+        "movl (%%esi), %%ecx\n"          // Załaduj pierwsze 4 bajty z *key do ecx
+        "cmpl %%ebx, %%ecx\n"            // Porównaj ecx z ebx
+        "jne 1f\n"                       // Skocz do etykiety 1, jeśli różne
 
-        "movl $0x3732312d, %%ebx\n"   // "-1234" as a number in the register
-        "movl 4(%%esi), %%ecx\n"      // Load the next 4 bytes
-        "cmpl %%ebx, %%ecx\n"         // Compare if it is "-1234"
-        "jne end\n"                   // Jump to end if different
+        "movl $0x3732312d, %%ebx\n"      // Załaduj wartość '-1234' do ebx
+        "movl 4(%%esi), %%ecx\n"         // Załaduj kolejne 4 bajty z key do ecx
+        "cmpl %%ebx, %%ecx\n"            // Porównaj ecx z ebx
+        "jne 1f\n"                       // Skocz do etykiety 1, jeśli różne
 
-        "movl $1, %%eax\n"            // Set is_valid to true (key is correct)
-        "end:\n"
-        "movl %%eax, %[is_valid]\n"   // Store the result in the is_valid variable
+        "movl $1, %%eax\n"               // Ustaw eax (is_valid = true)
+        "jmp 2f\n"                       // Skocz do etykiety 2
 
-        : [is_valid] "=r" (is_valid)   // Output: is_valid value
-        : [key] "r" (key)             // Input: key
-        : "eax", "ebx", "ecx", "esi"  // Registers used
+        "1:\n"
+        "xor %%eax, %%eax\n"             // Zeruj eax (is_valid = false)
+
+        "2:\n"
+        "movb %%al, %[is_valid]\n"       // Zapisz al do is_valid
+
+        : [is_valid] "=r" (is_valid)     // Wyjście
+        : [key] "r" (key)                // Wejście
+        : "eax", "ebx", "ecx", "esi"     // Zmienione rejestry
     );
 
     return is_valid;

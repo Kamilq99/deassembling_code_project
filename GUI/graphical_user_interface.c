@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 // Function prototype for the license verification function in VerifyKey.dll
 typedef bool (*VerifyKeyFunc)(const char* key);
@@ -12,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // Register the window class
     const char CLASS_NAME[] = "LicenseKeyWindow";
 
-    WNDCLASS wc = { };
+    WNDCLASS wc = { 0 };
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
@@ -39,7 +40,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     ShowWindow(hwnd, nCmdShow);
 
     // Message loop
-    MSG msg = { };
+    MSG msg = { 0 };
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
@@ -93,7 +94,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             );
 
             // Load the VerifyKey.dll dynamically
-            hLib = LoadLibrary("VerifyKey/VerifyKey.dll");
+            hLib = LoadLibrary("VerifyKey/verify_key.dll");
             if (hLib != NULL) {
                 // Get the address of the verify_license_key function
                 verify_key = (VerifyKeyFunc)GetProcAddress(hLib, "verify_license_key");
@@ -117,6 +118,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                     } else {
                         MessageBox(hwnd, "Invalid license key!", "Error", MB_OK);
                     }
+                } else {
+                    MessageBox(hwnd, "Function pointer is NULL.", "Error", MB_OK);
                 }
             }
             break;
