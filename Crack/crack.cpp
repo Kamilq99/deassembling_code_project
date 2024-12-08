@@ -1,45 +1,79 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
-void PatchDLL(const std::string& dllPath) {
-    std::fstream file(dllPath, std::ios::in | std::ios::out | std::ios::binary);
-    if (!file.is_open()) {
-        std::cerr << "Error: Could not open " << dllPath << std::endl;
+// Function to replace key in DLL file
+void replaceKeyInDll(const std::string& dllPath, const std::string& oldKey, const std::string& newKey) {
+    FILE* file = fopen(dllPath.c_str(), "rb");
+    if (!file) {
+        std::cerr << "Error: Could not open DLL file." << std::endl;
         return;
     }
 
-    // Example: Replace hardcoded key with "ANYTHING-0000"
-    const std::string originalKey = "SECRET-1234";
-    const std::string patchedKey = "ANYTHING-0000";
-
-    // Read the entire DLL into a string buffer
-    std::string buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    size_t pos = buffer.find(originalKey);
-
-    if (pos != std::string::npos) {
-        // Go to the position where the key was found
-        file.seekp(pos);
-
-        // Write the patched key into the file (ensure that it's the same length or fill the remaining space with NULs)
-        file.write(patchedKey.c_str(), patchedKey.size());
-
-        // If the new key is shorter than the original, fill the remaining space with NUL characters
-        if (patchedKey.size() < originalKey.size()) {
-            file.write("\0", originalKey.size() - patchedKey.size());
+ /*   std::stringstream buffer;
+    buffer << file.rdbuf();
+    std::string content = buffer.str();
+    file.close(); */
+    char* data = new char[0x10000];
+    int num = fread(data, 1, 0x10000, file);
+    fclose(file);
+    for (int i = 0; i < num; i++)
+    {
+        int j = 0;
+        if (data[i] == oldKey[j]) {
+            for (j = 1; j < oldKey.length(); j++) {
+                if (data[i + j] != oldKey[j])
+                    break;
+            }
+            if (data[i + j] == oldKey[j])
+            {
+                for (j = 0; j < oldKey.length(); j++)
+                {
+                    data[i + j] = newKey[j];
+                }
+            }
         }
+    }
+    
+/*
+    size_t pos = content.find(oldKey);
+    if (pos != std::string::npos) {
+        content.replace(pos, oldKey.length(), newKey);
 
-        std::cout << "DLL patched successfully!" << std::endl;
+        std::ofstream outFile(dllPath);
+        outFile << content;
+        outFile.close();
+
+        std::ifstream verifyFile(dllPath);
+        std::stringstream verifyBuffer;
+        verifyBuffer << verifyFile.rdbuf();
+        std::string verifyContent = verifyBuffer.str();
+        verifyFile.close();
+
+        if (verifyContent.find(newKey) != std::string::npos) {
+            std::cout << "Key successfully replaced in DLL." << std::endl;
+        }
+        else {
+            std::cerr << "Error: Failed to replace key in DLL." << std::endl;
+        }
     }
     else {
-        std::cerr << "Original key not found in DLL." << std::endl;
+        std::cerr << "Error: Old key not found in DLL." << std::endl;
     }
-
-    file.close();
+    */
+    std::ofstream outFile(dllPath, std::ios::binary);
+    outFile.write(data, num);
+    outFile.close();
 }
 
 int main() {
-    std::string dllPath = "../verify_key.dll";
-    PatchDLL(dllPath);
+    std::string dllPath = "verify_key.dll";
+    std::string oldKey = "SECRET-1234";
+    std::string newKey = "ANYTHI-0000";
+
+    replaceKeyInDll(dllPath, oldKey, newKey);
+
     return 0;
 }
+//the end
