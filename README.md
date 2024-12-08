@@ -4,25 +4,25 @@
     <img src="https://github.com/user-attachments/assets/db10c382-01a6-41bb-8a80-89dec288e2b0" alt="Wydział Elektroniki i Informatyki - Politechnika Rzeszowska">
 </div>
 
-##Project Objective
+## Project Objective
 
 The aim of the above mentioned project topic was to create a simple window application for any Microsoft Windows system. The general idea was to create a simple application, which after compilation is a simple window asking the user to enter a license key, the user presses the button to send the key and it is verified.
 
 The main part of the task, however, concerns the creation of a crack, which goes through the compiled verify_key.dll file and allows to make changes in it, which means that we can plant a new key, which will be accepted by the application.
 
-##Appearance of the application window
+## Appearance of the application window
 
 <div style="text-align: center;">
     <img src="https://github.com/user-attachments/assets/cf02ad10-522c-48eb-a2ab-4ae6d686a4bd" alt="Okienko Aplikacji">
 </div>
 
-##License key acceptance message
+## License key acceptance message
 
 <div style="text-align: center;">
     <img src="https://github.com/user-attachments/assets/37d2f04b-2f07-4613-9b25-0892914faa61" alt="Klucz weryfikacyjny poprawny">
 </div>
 
-##Necessary things for the application to work
+## Necessary things for the application to work
 
 The first thing that is needed for the application to work correctly is to download the **MinGW - Minimalist GNU for Windows** graphics library available at:
 
@@ -44,12 +44,12 @@ Another important thing is the environment for writing code. Although I am a big
 
 https://visualstudio.microsoft.com/pl/
 
-##Programming tools used in the project
+## Programming tools used in the project
 
 - C++ programming language
 - Makefile for compilation automation
 
-##Commands to build the application
+## Commands to build the application
 
 First, go to the project directory and run the command:
 
@@ -67,6 +67,6 @@ The last thing to do is to type the command:
 
 This will generate the Crack.exe file, which when double-clicked and run will replace the license key with another one that we want to assign ourselves and cause the application to work.
 
-##Summary
+## Summary
 
 This project was created as part of a course for a college degree program specializing in Cybersecurity and is intended to show how easy it is to cheat and gain unauthorized access to various applications. The project is also a low-level programming activity. However, when creating similar things ourselves, we should remember that cracking license keys for applications, whether web or desktop, is completely illegal and punishable. Let's remember that there is a lack of respect for the creators and companies that create better and newer software, and the work put into it should make us respect the actions of the Developers and not commit such frauds, and buy legal applications in stores.
