@@ -26,23 +26,29 @@ The main part of the task, however, concerns the creation of a crack, which goes
 
 The first thing that is needed for the application to work correctly is to download the **MinGW - Minimalist GNU for Windows** graphics library available at:
 
+<p align="center">
 https://sourceforge.net/projects/mingw/
+</p>
 
 In the case of the MinGW library. You need to install it and select all possible options that will be displayed in the installation window. Then click "Apply Changes" and wait until the installation process is complete. Then we need to edit the environment variables and add the path: **C:\MinGW\bin**
 
 Then, to check if the library is already on your computer, open **cmd** and enter the following command:
 
-```gcc --version```
+```Bash
+gcc --version
+```
 
-<div style="text-align: center;">
+<p align="center">
     <img src="https://github.com/user-attachments/assets/b5a2db0f-9a32-42d3-95d5-180a84ce2912" alt="MinGW">
-</div>
+</p>
 
 This message means that the path has been successfully added to the environment variables and the application will now be able to build.
 
 Another important thing is the environment for writing code. Although I am a big fan of Visual Studio Code, in this case I had to use **Visual Studio 2022**. I recommend downloading it from:
 
+<p align="center">
 https://visualstudio.microsoft.com/pl/
+</p>
 
 ## Programming tools used in the project
 
