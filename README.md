@@ -52,14 +52,18 @@ https://visualstudio.microsoft.com/pl/
 
 ## Programming tools used in the project
 
-- C++ programming language
-- Makefile for compilation automation
+<ul>
+<li >C++ programming language</li>
+<li>Makefile for compilation automation</li>
+</ul>
 
 ## Commands to build the application
 
 First, go to the project directory and run the command:
 
-```mingw32-make```
+```Bash
+mingw32-make
+```
 
 This will start the process of building the windowed application via a configuration Makefile, which automates the building of the application without having to build this part of the application manually folder by folder.
 
@@ -69,7 +73,9 @@ app.exe is the main file of the entire application and it is the window in the p
 
 The last thing to do is to type the command:
 
-```gcc -o Crack.exe Crack\crack.app```
+```Bash
+gcc -o Crack.exe Crack\crack.app
+```
 
 This will generate the Crack.exe file, which when double-clicked and run will replace the license key with another one that we want to assign ourselves and cause the application to work.
 
