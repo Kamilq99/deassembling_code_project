@@ -1,8 +1,8 @@
 # Disassembling the Windows Application License Key
 
-<div style="text-align: center;">
-    <img src="https://github.com/user-attachments/assets/db10c382-01a6-41bb-8a80-89dec288e2b0" alt="Wydział Elektroniki i Informatyki - Politechnika Rzeszowska">
-</div>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/db10c382-01a6-41bb-8a80-89dec288e2b0" alt="Wydział Elektroniki i Informatyki - Politechnika Rzeszowska">
+</p>
 
 ## Project Objective
 
@@ -12,15 +12,15 @@ The main part of the task, however, concerns the creation of a crack, which goes
 
 ## Appearance of the application window
 
-<div style="text-align: center;">
+<p align="center">
     <img src="https://github.com/user-attachments/assets/cf02ad10-522c-48eb-a2ab-4ae6d686a4bd" alt="Okienko Aplikacji">
-</div>
+</p>
 
 ## License key acceptance message
 
-<div style="text-align: center;">
+<p align="center">
     <img src="https://github.com/user-attachments/assets/37d2f04b-2f07-4613-9b25-0892914faa61" alt="Klucz weryfikacyjny poprawny">
-</div>
+</p>
 
 ## Necessary things for the application to work
 
